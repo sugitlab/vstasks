@@ -1,0 +1,111 @@
+{
+  "name": "vstasks",
+  "displayName": "VsTasks",
+  "description": "Manage tasks in Markdown files with Obsidian Tasks compatible features",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown",
+    "workspaceContains:**/*.md",
+    "workspaceContains:**/*.markdown"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vstasks.refreshTasks",
+        "title": "VsTasks: Refresh Tasks"
+      },
+      {
+        "command": "vstasks.searchTasks",
+        "title": "VsTasks: Search Tasks"
+      },
+      {
+        "command": "vstasks.createTask",
+        "title": "VsTasks: Create New Task"
+      },
+      {
+        "command": "vstasks.toggleTaskStatus",
+        "title": "VsTasks: Toggle Task Status"
+      },
+      {
+        "command": "vstasks.runQuery",
+        "title": "VsTasks: Run Task Query"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "vstasks-sidebar",
+          "title": "VsTasks",
+          "icon": "resources/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "vstasks-sidebar": [
+        {
+          "id": "vstasks.taskTree",
+          "name": "Tasks"
+        },
+        {
+          "id": "vstasks.queryView",
+          "name": "Query Tasks"
+        }
+      ]
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vstasks.toggleTaskStatus",
+          "when": "editorLangId == markdown && editorTextFocus",
+          "group": "vstasks"
+        },
+        {
+          "command": "vstasks.createTask",
+          "when": "editorLangId == markdown && editorTextFocus",
+          "group": "vstasks"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "test-watch": "npm run watch-tests -- --watch"
+  },
+  "devDependencies": {
+    "@jest/globals": "^29.7.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.3",
+    "@types/node": "^18.18.0",
+    "@types/uuid": "^10.0.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.5.0",
+    "typescript": "^5.2.2",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "chrono-node": "^2.7.0",
+    "uuid": "^9.0.1"
+  }
+}
