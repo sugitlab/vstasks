@@ -16,7 +16,7 @@ export class TaskTreeItem extends vscode.TreeItem {
       type === "task" && task ? task.description : groupName || "Unknown",
       type === "task"
         ? vscode.TreeItemCollapsibleState.None
-        : vscode.TreeItemCollapsibleState.Expanded
+        : vscode.TreeItemCollapsibleState.Collapsed
     );
 
     if (type === "task" && task) {
