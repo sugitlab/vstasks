@@ -36,6 +36,10 @@
       {
         "command": "vstasks.runQuery",
         "title": "VsTasks: Run Task Query"
+      },
+      {
+        "command": "vstasks.showStatistics",
+        "title": "VsTasks: Show Task Statistics"
       }
     ],
     "viewsContainers": {
@@ -51,11 +55,13 @@
       "vstasks-sidebar": [
         {
           "id": "vstasks.taskTree",
-          "name": "Tasks"
+          "name": "Tasks",
+          "icon": "resources/icon.png"
         },
         {
           "id": "vstasks.queryView",
-          "name": "Query Tasks"
+          "name": "Query Tasks",
+          "icon": "resources/icon.png"
         }
       ]
     },
