@@ -1,10 +1,10 @@
 {
   "name": "vstasks",
-  "displayName": "VsTasks",
-  "description": "Manage tasks in Markdown files with Obsidian Tasks compatible features",
+  "displayName": "VsTasks - Markdown Task Manager",
+  "description": "VSCodeでMarkdownタスクをObsidian Tasks互換クエリ・繰り返し・統計・外部連携で本格管理。直感的なUIと強力な検索で生産性UP。",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": ">=1.85.0"
   },
   "categories": [
     "Other"
@@ -189,7 +189,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run package",
+    "build": "node scripts/build.js",
+    "package-ext": "node scripts/package.js",
+    "vscode:prepublish": "npm run package-ext",
     "compile": "webpack",
     "watch": "webpack --watch",
     "package": "webpack --mode production --devtool hidden-source-map",
@@ -225,5 +227,28 @@
   "dependencies": {
     "chrono-node": "^2.7.0",
     "uuid": "^9.0.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourname/vstasks.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourname/vstasks/issues"
+  },
+  "homepage": "https://github.com/yourname/vstasks#readme",
+  "keywords": [
+    "markdown",
+    "task",
+    "todo",
+    "obsidian",
+    "query",
+    "productivity",
+    "statistics",
+    "calendar",
+    "workflow"
+  ],
+  "galleryBanner": {
+    "color": "#2d2d2d",
+    "theme": "dark"
   }
 }
