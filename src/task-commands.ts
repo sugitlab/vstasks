@@ -2,6 +2,9 @@
 import * as vscode from "vscode";
 import { WorkspaceTaskManager } from "./models/task-manager";
 import { ITask } from "./models/task";
+import { TaskEditor } from "./views/task-editor";
+import { TaskDocumentHelper } from "./task-document-helper";
+import { TaskParser } from "./models/task-parser";
 
 export class TaskCommands {
   private taskManager: WorkspaceTaskManager;
@@ -75,7 +78,24 @@ export class TaskCommands {
         vscode.window.showErrorMessage("No task selected");
         return;
       }
-      // TODO: Implement task editing dialog
+      const editor = vscode.window.activeTextEditor;
+      if (!editor || editor.document.languageId !== "markdown") {
+        vscode.window.showErrorMessage("No active markdown editor");
+        return;
+      }
+      const updated = await TaskEditor.showEditDialog(task);
+      if (!updated) {
+        vscode.window.showInformationMessage("編集がキャンセルされました");
+        return;
+      }
+      // rawText再生成
+      updated.rawText = TaskParser.generateTaskLine(updated);
+      await TaskDocumentHelper.updateTaskInDocument(
+        editor.document,
+        task,
+        updated
+      );
+      vscode.window.showInformationMessage("タスクを編集しました");
     } catch (err) {
       vscode.window.showErrorMessage(`Failed to edit task: ${err}`);
     }

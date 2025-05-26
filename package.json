@@ -40,6 +40,26 @@
       {
         "command": "vstasks.showStatistics",
         "title": "VsTasks: Show Task Statistics"
+      },
+      {
+        "command": "vstasks.addSavedQuery",
+        "title": "Add Query"
+      },
+      {
+        "command": "vstasks.editSavedQuery",
+        "title": "Edit Query"
+      },
+      {
+        "command": "vstasks.deleteSavedQuery",
+        "title": "Delete Query"
+      },
+      {
+        "command": "vstasks.runSavedQuery",
+        "title": "Run Query"
+      },
+      {
+        "command": "vstasks.editTask",
+        "title": "VsTasks: Edit Task"
       }
     ],
     "viewsContainers": {
@@ -76,6 +96,25 @@
           "command": "vstasks.createTask",
           "when": "editorLangId == markdown && editorTextFocus",
           "group": "vstasks"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "vstasks.editSavedQuery",
+          "when": "view == vstasks.queryView && viewItem == savedQuery",
+          "group": "inline"
+        },
+        {
+          "command": "vstasks.deleteSavedQuery",
+          "when": "view == vstasks.queryView && viewItem == savedQuery",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "vstasks.addSavedQuery",
+          "when": "view == vstasks.queryView",
+          "group": "navigation"
         }
       ]
     },
@@ -127,7 +166,9 @@
         },
         "vstasks.customTaskStatuses": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "カスタムタスクステータスのリスト (例: [\"waiting\", \"blocked\"])",
           "markdownDescription": "カスタムタスクステータスのリスト (例: [\"waiting\", \"blocked\"])"
@@ -156,13 +197,14 @@
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js",
+    "test": "jest",
     "test-watch": "npm run watch-tests -- --watch"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/chai": "^5.2.2",
     "@types/glob": "^8.1.0",
+    "@types/jest": "^29.5.14",
     "@types/mocha": "^10.0.3",
     "@types/node": "^18.18.0",
     "@types/uuid": "^10.0.0",
@@ -174,6 +216,7 @@
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
+    "ts-jest": "^29.3.4",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",

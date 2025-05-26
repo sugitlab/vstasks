@@ -31,7 +31,7 @@ export class TaskCompletionProvider implements vscode.CompletionItemProvider {
     );
     items.push(
       new vscode.CompletionItem(
-        "⏫ high priority",
+        "1️⃣ high priority",
         vscode.CompletionItemKind.Snippet
       )
     );

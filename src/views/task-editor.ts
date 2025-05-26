@@ -153,7 +153,9 @@ export class TaskEditor {
     };
   }
   static async showEditDialog(task: ITask): Promise<ITask | undefined> {
-    const description = await QuickPickFlow.stepDescription(task.description);
+    // インライン表現を除去したタイトルのみを抽出
+    const pureTitle = TaskEditor.extractPureTitle(task.description);
+    const description = await QuickPickFlow.stepDescription(pureTitle);
     if (!description) {
       return undefined;
     }
@@ -170,6 +172,19 @@ export class TaskEditor {
       recurrence,
     };
   }
+
+  /**
+   * descriptionからインライン表現（⏫, ⏳, 📅, #, 🔁 など）を除去し純粋なタイトルのみ返す
+   */
+  static extractPureTitle(description: string): string {
+    // 絵文字やタグ、日付、優先度、繰り返し等を除去
+    return description
+      .replace(/(📅|⏳|⏫|🔁)\s*[^\s#]+/g, "") // 絵文字+値
+      .replace(/#[^\s]+/g, "") // タグ
+      .replace(/\s+/g, " ") // 余分な空白
+      .trim();
+  }
+
   static async showQuickPick<T>(
     items: Array<vscode.QuickPickItem & { value: T }>,
     options: vscode.QuickPickOptions

@@ -18,8 +18,8 @@ export class TaskCodeLensProvider implements vscode.CodeLensProvider {
       );
       codeLenses.push(
         new vscode.CodeLens(range, {
-          title: task.status === "done" ? "Mark as TODO" : "Mark as Done",
-          command: "vstasks.toggleTaskStatus",
+          title: "Edit this task",
+          command: "vstasks.editTask",
           arguments: [task],
         })
       );

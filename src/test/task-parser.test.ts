@@ -29,11 +29,16 @@ describe("TaskParser", () => {
     expect(task?.scheduledDate?.toISOString()).toContain("2024-01-10");
   });
 
-  it("should parse a task with priority markers", () => {
-    expect(parser.extractPriority("⏫ urgent")).toBe(Priority.HIGHEST);
-    expect(parser.extractPriority("⬆️ high")).toBe(Priority.HIGH);
-    expect(parser.extractPriority("🔼 medium")).toBe(Priority.MEDIUM);
-    expect(parser.extractPriority("🔽 low")).toBe(Priority.LOW);
+  it("should parse new keycap priority emoji (1️⃣ 2️⃣ 3️⃣ 4️⃣)", () => {
+    expect(parser.extractPriority("1️⃣ low")).toBe(Priority.LOW);
+    expect(parser.extractPriority("2️⃣ medium")).toBe(Priority.MEDIUM);
+    expect(parser.extractPriority("3️⃣ high")).toBe(Priority.HIGH);
+    expect(parser.extractPriority("4️⃣ highest")).toBe(Priority.HIGHEST);
+    // Multiple markers: should pick the first
+    expect(parser.extractPriority("2️⃣ 4️⃣ 1️⃣")).toBe(Priority.MEDIUM);
+    // Emoji at end, with/without space
+    expect(parser.extractPriority("Task high3️⃣")).toBe(Priority.HIGH);
+    expect(parser.extractPriority("Task highest 4️⃣")).toBe(Priority.HIGHEST);
     expect(parser.extractPriority("no marker")).toBe(Priority.NONE);
   });
 
