@@ -303,4 +303,55 @@ export class WorkspaceTaskManager {
   findTaskIdsByDueDateRange(start: Date, end: Date): string[] {
     return this.index.findByDueDateRange(start, end);
   }
+
+  /**
+   * 指定ファイルをスキャンしてタスクを抽出・登録
+   */
+  async scanFile(uri: vscode.Uri): Promise<void> {
+    try {
+      const content = await readFile(uri.fsPath, "utf8");
+      const parser = new TaskParser();
+      const tasks = parser.parseMarkdownContent(content, uri.fsPath);
+      this.removeTasks(uri.fsPath);
+      if (tasks.length > 0) {
+        this.addTasks(uri.fsPath, tasks);
+      }
+    } catch (error) {
+      console.error(`Error scanning file ${uri.fsPath}:`, error);
+    }
+  }
+
+  /**
+   * ワークスペース内の全Markdownファイルをスキャン
+   */
+  async scanWorkspace(): Promise<void> {
+    const markdownFiles = await vscode.workspace.findFiles(
+      "**/*.{md,markdown}"
+    );
+    const batchSize = 10;
+    for (let i = 0; i < markdownFiles.length; i += batchSize) {
+      const batch = markdownFiles.slice(i, i + batchSize);
+      await Promise.all(batch.map((uri) => this.scanFile(uri)));
+    }
+  }
+
+  /**
+   * タスクのステータスをトグル
+   */
+  toggleTaskStatus(taskId: string): boolean {
+    const allTasks = this.getAllTasks();
+    const task = allTasks.find((t) => t.id === taskId);
+    if (!task) {
+      return false;
+    }
+    const newStatus =
+      task.status === TaskStatus.DONE ? TaskStatus.TODO : TaskStatus.DONE;
+    const updates: Partial<ITask> = { status: newStatus };
+    if (newStatus === TaskStatus.DONE) {
+      updates.completedDate = new Date();
+    } else {
+      updates.completedDate = undefined;
+    }
+    return this.updateTask(taskId, updates);
+  }
 }

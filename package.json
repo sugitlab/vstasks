@@ -72,6 +72,73 @@
           "group": "vstasks"
         }
       ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "VsTasks Extension Settings",
+      "properties": {
+        "vstasks.dateFormat": {
+          "type": "string",
+          "default": "yyyy-MM-dd",
+          "description": "日付の表示フォーマット (例: yyyy-MM-dd)",
+          "markdownDescription": "日付の表示フォーマット (例: yyyy-MM-dd)"
+        },
+        "vstasks.defaultPriority": {
+          "type": "number",
+          "default": 0,
+          "description": "新規タスクのデフォルト優先度 (0:なし, 1:低, 2:中, 3:高, 4:最高)",
+          "markdownDescription": "新規タスクのデフォルト優先度 (0:なし, 1:低, 2:中, 3:高, 4:最高)"
+        },
+        "vstasks.autoRefresh": {
+          "type": "boolean",
+          "default": true,
+          "description": "タスク一覧の自動更新を有効化するか",
+          "markdownDescription": "タスク一覧の自動更新を有効化するか"
+        },
+        "vstasks.refreshInterval": {
+          "type": "number",
+          "default": 300,
+          "description": "自動更新の間隔（秒）",
+          "markdownDescription": "自動更新の間隔（秒）"
+        },
+        "vstasks.enableCodeLens": {
+          "type": "boolean",
+          "default": true,
+          "description": "タスク行にCodeLensを表示するか",
+          "markdownDescription": "タスク行にCodeLensを表示するか"
+        },
+        "vstasks.enableHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "タスク行にホバー情報を表示するか",
+          "markdownDescription": "タスク行にホバー情報を表示するか"
+        },
+        "vstasks.maxTasksInView": {
+          "type": "number",
+          "default": 200,
+          "description": "タスクリストの最大表示件数",
+          "markdownDescription": "タスクリストの最大表示件数"
+        },
+        "vstasks.customTaskStatuses": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "カスタムタスクステータスのリスト (例: [\"waiting\", \"blocked\"])",
+          "markdownDescription": "カスタムタスクステータスのリスト (例: [\"waiting\", \"blocked\"])"
+        },
+        "vstasks.queryTimeout": {
+          "type": "number",
+          "default": 5000,
+          "description": "クエリ実行のタイムアウト（ミリ秒）",
+          "markdownDescription": "クエリ実行のタイムアウト（ミリ秒）"
+        },
+        "vstasks.debugMode": {
+          "type": "boolean",
+          "default": false,
+          "description": "デバッグモードを有効化するか",
+          "markdownDescription": "デバッグモードを有効化するか"
+        }
+      }
     }
   },
   "scripts": {

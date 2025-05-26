@@ -402,26 +402,26 @@ VSCodeコマンドパレットで使用できるコマンドを実装してく�
 
 以下のコマンドクラスを作成：
 1. TaskCommands class
-   - registerCommands(context: vscode.ExtensionContext): void
-   - createTask(): Promise<void>
-   - toggleTaskStatus(task?: Task): Promise<void>
-   - editTask(task?: Task): Promise<void>
-   - deleteTask(task?: Task): Promise<void>
-   - showAllTasks(): Promise<void>
-   - showTasksByTag(): Promise<void>
-   - runCustomQuery(): Promise<void>
+- registerCommands(context: vscode.ExtensionContext): void
+- createTask(): Promise<void>
+- toggleTaskStatus(task?: Task): Promise<void>
+- editTask(task?: Task): Promise<void>
+- deleteTask(task?: Task): Promise<void>
+- showAllTasks(): Promise<void>
+- showTasksByTag(): Promise<void>
+- runCustomQuery(): Promise<void>
 
 2. QuickActions class
-   - showQuickActionPicker(): Promise<void>
-   - showTaskAtCursor(): Promise<void>
-   - insertTaskAtCursor(): Promise<void>
-   - toggleTaskAtCursor(): Promise<void>
+- showQuickActionPicker(): Promise<void>
+- showTaskAtCursor(): Promise<void>
+- insertTaskAtCursor(): Promise<void>
+- toggleTaskAtCursor(): Promise<void>
 
 3. WorkspaceCommands class
-   - refreshAllTasks(): Promise<void>
-   - exportTasks(): Promise<void>
-   - importTasks(): Promise<void>
-   - showTaskStatistics(): Promise<void>
+- refreshAllTasks(): Promise<void>
+- exportTasks(): Promise<void>
+- importTasks(): Promise<void>
+- showTaskStatistics(): Promise<void>
 
 各コマンドに適切なエラーハンドリング、ユーザーフィードバック（通知）、ログ出力を含めてください。
 package.jsonのcontributes.commandsセクションも生成してください。
