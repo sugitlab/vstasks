@@ -2,7 +2,7 @@
   "name": "vstasks",
   "displayName": "VsTasks - Markdown Task Manager",
   "description": "VSCodeでMarkdownタスクをObsidian Tasks互換クエリ・繰り返し・統計・外部連携で本格管理。直感的なUIと強力な検索で生産性UP。",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": ">=1.85.0"
   },
