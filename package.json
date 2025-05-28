@@ -31,7 +31,7 @@
       },
       {
         "command": "vstasks.toggleTaskStatus",
-        "title": "VsTasks: Toggle Task Status"
+        "title": "Toggle Status"
       },
       {
         "command": "vstasks.runQuery",
@@ -47,11 +47,11 @@
       },
       {
         "command": "vstasks.editSavedQuery",
-        "title": "Edit Query"
+        "title": "Edit"
       },
       {
         "command": "vstasks.deleteSavedQuery",
-        "title": "Delete Query"
+        "title": "Delete"
       },
       {
         "command": "vstasks.runSavedQuery",
@@ -100,14 +100,28 @@
       ],
       "view/item/context": [
         {
+          "command": "vstasks.toggleTaskStatus",
+          "when": "(view == vstasks.taskTree || view == vstasks.queryView) && viewItem == task-todo",
+          "group": "inline",
+          "title": "Toggle Status"
+        },
+        {
+          "command": "vstasks.toggleTaskStatus",
+          "when": "(view == vstasks.taskTree || view == vstasks.queryView) && viewItem == task-done",
+          "group": "inline",
+          "title": "Toggle Status"
+        },
+        {
           "command": "vstasks.editSavedQuery",
           "when": "view == vstasks.queryView && viewItem == savedQuery",
-          "group": "inline"
+          "group": "inline",
+          "title": "Edit"
         },
         {
           "command": "vstasks.deleteSavedQuery",
           "when": "view == vstasks.queryView && viewItem == savedQuery",
-          "group": "inline"
+          "group": "inline",
+          "title": "Delete"
         }
       ],
       "view/title": [

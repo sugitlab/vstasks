@@ -23,16 +23,16 @@ export class TaskTreeItem extends vscode.TreeItem {
       this.id = task.id;
       this.tooltip = this.generateTooltip(task);
       this.command = {
-        command: "vstasks.toggleTaskStatus",
-        title: "Toggle Task Status",
-        arguments: [task.id],
+        command: "vscode.open",
+        title: "Open File",
+        arguments: [vscode.Uri.file(task.filePath)],
       };
 
       // Set icon based on task status
       this.iconPath = this.getIconForTask(task);
 
       // Set context value for right-click menu
-      this.contextValue = "task";
+      this.contextValue = `task-${task.status.toLowerCase()}`;
 
       // Add description showing due date if available
       if (task.dueDate) {

@@ -34,7 +34,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   // Saved Query Sidebar
   const savedQueryManager = new SavedQueryManager(context);
-  const queryTreeProvider = new QueryTreeDataProvider(savedQueryManager);
+  const queryTreeProvider = new QueryTreeDataProvider(
+    savedQueryManager,
+    taskManager
+  );
   vscode.window.createTreeView("vstasks.queryView", {
     treeDataProvider: queryTreeProvider,
     showCollapseAll: false,
@@ -107,7 +110,54 @@ export function activate(context: vscode.ExtensionContext) {
       } catch (err) {
         vscode.window.showErrorMessage(`クエリ実行エラー: ${err}`);
       }
-    })
+    }),
+    vscode.commands.registerCommand("vstasks.completeTask", async (item) => {
+      // itemはTaskTreeItemまたはQueryTreeItem
+      let task = item?.task;
+      if (!task && item?.type === "task") {
+        task = item.task;
+      }
+      if (!task && item?.type === "queryTask") {
+        task = item.task;
+      }
+      if (!task) {
+        vscode.window.showErrorMessage("タスク情報が取得できません");
+        return;
+      }
+      if (task.status === "done") {
+        vscode.window.showInformationMessage("すでに完了済みです");
+        return;
+      }
+      // ステータスを完了に変更
+      const taskCommands = new TaskCommands(taskManager);
+      await taskCommands.toggleTaskStatus(task.id);
+      vscode.window.showInformationMessage("タスクを完了にしました");
+    }),
+    vscode.commands.registerCommand(
+      "vstasks.openTaskFile",
+      async (filePath: string, lineNumber: number) => {
+        if (!filePath) {
+          vscode.window.showErrorMessage("ファイルパスがありません");
+          return;
+        }
+        try {
+          const doc = await vscode.workspace.openTextDocument(filePath);
+          const editor = await vscode.window.showTextDocument(doc, {
+            preview: false,
+          });
+          if (typeof lineNumber === "number" && lineNumber >= 0) {
+            const pos = new vscode.Position(lineNumber, 0);
+            editor.selection = new vscode.Selection(pos, pos);
+            editor.revealRange(
+              new vscode.Range(pos, pos),
+              vscode.TextEditorRevealType.InCenter
+            );
+          }
+        } catch (e) {
+          vscode.window.showErrorMessage(`ファイルを開けませんでした: ${e}`);
+        }
+      }
+    )
   );
 
   // Setup workspace file watcher for markdown files
